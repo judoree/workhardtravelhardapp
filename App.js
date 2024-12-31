@@ -5,10 +5,18 @@ import { useState } from "react";
 
 export default function App() {
   const [working, setWorking] = useState(true);
-  const travel = () => setWorking(false);
   const [text, setText] = useState("");
+  const [toDos, setToDos] = useState({});
+  const travel = () => setWorking(false);
   const work = () => setWorking(true);
   const onChangeText = (payload) => setText(payload);
+  const addToDo = () => {
+    if (text === "") {
+      return;
+    }
+    const newToDos = Object.assign({}, toDos, { [Data.now()]: { text, work: working } });
+    setText("");
+  };
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -22,6 +30,7 @@ export default function App() {
       </View>
       <View>
         <TextInput
+          onSubmitEditing={addToDo}
           value={text}
           onChangeText={onChangeText}
           returnKeyType="send"
